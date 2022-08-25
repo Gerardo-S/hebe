@@ -1,10 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../server/db/client";
+import { prisma } from "../../../server/db/client";
 
 const link = async (req: NextApiRequest, res: NextApiResponse) => {
   const slug = req.query["slug"];
 
-  console.log("type", slug);
   // type of string[] not allowed
   if (!slug || typeof slug !== "string") {
     res.statusCode = 404;
@@ -23,7 +22,7 @@ const link = async (req: NextApiRequest, res: NextApiResponse) => {
     return;
   }
 
-  return res.redirect(data.url);
+  return res.json(data);
 };
 
 export default link;
