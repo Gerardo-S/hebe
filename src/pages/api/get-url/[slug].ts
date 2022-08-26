@@ -6,9 +6,7 @@ const link = async (req: NextApiRequest, res: NextApiResponse) => {
 
   // type of string[] not allowed
   if (!slug || typeof slug !== "string") {
-    res.statusCode = 404;
-
-    res.send(JSON.stringify({ message: "please use with a slug" }));
+    res.status(404).json({ message: "please provide a slug" });
     return;
   }
 
@@ -16,19 +14,16 @@ const link = async (req: NextApiRequest, res: NextApiResponse) => {
     where: { slug: { equals: slug } },
   });
   if (!data) {
-    res.statusCode = 404;
-    res.setHeader("Content-Type", "application/json");
-    res.setHeader("Access-Control-Allow-Origin", "*");
-    res.setHeader(
-      "Cache-Control",
-      "s-maxage=1000000000, stale-while-revalidate"
-    );
-    res.send(JSON.stringify({ message: "slug not found" }));
+    res.status(404).json({ message: "slug not found", status: 404 });
 
     return;
   }
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Cache-Control", "s-maxage=1000000000, stale-while-revalidate");
 
-  return res.json(data);
+  res.json(data);
+  return;
 };
 
 export default link;
