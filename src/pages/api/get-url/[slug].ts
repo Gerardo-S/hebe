@@ -1,9 +1,9 @@
+//src/pages/api/get-link/[slug].ts
 import type { NextApiRequest, NextApiResponse } from "next";
 import { prisma } from "../../../server/db/client";
 
 const link = async (req: NextApiRequest, res: NextApiResponse) => {
   const slug = req.query["slug"];
-
   // type of string[] not allowed
   if (!slug || typeof slug !== "string") {
     res.status(404).json({ message: "please provide a slug" });
