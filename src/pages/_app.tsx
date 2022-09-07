@@ -1,5 +1,7 @@
 // src/pages/_app.tsx
 import { withTRPC } from "@trpc/next";
+import { httpLink } from "@trpc/client/links/httpLink";
+import { loggerLink } from "@trpc/client/links/loggerLink";
 import type { AppRouter } from "../server/router";
 import type { AppType } from "next/dist/shared/lib/utils";
 import superjson from "superjson";
@@ -26,6 +28,17 @@ export default withTRPC<AppRouter>({
     return {
       url,
       transformer: superjson,
+      // links: [
+      //   // adds pretty logs to your console in development and logs errors in production
+      //   loggerLink({
+      //     enabled: (opts) =>
+      //       process.env.NODE_ENV === "development" ||
+      //       (opts.direction === "down" && opts.result instanceof Error),
+      //   }),
+      //   httpLink({
+      //     url: url,
+      //   }),
+      // ],
       /**
        * @link https://react-query.tanstack.com/reference/QueryClient
        */
